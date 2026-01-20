@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang=“ja”>
+<head>
+    <meta charset=“UTF-8">
+    <meta name=“viewport” content=“width=device-width, initial-scale=1.0">
+    <title>colomir 簡易パーソナルカラー診断</title>
+    
+    <style>
+        /* === 基本リセットとフォント設定 === */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, “Helvetica Neue”, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            box-sizing: border-box;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        /* === アプリケーションコンテナ === */
+        #diagnosis-app {
+            max-width: 420px;
+            width: 95%;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 25px 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            transition: height 0.5s ease-in-out; 
+        }
+
+        /* === ロゴ・タイトル === */
+        #diagnosis-app h2.logo-title {
+            color: #FF69B4;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            text-align: center;
+            margin-top: 0;
+        }
+        #diagnosis-app h2.main-title {
+            font-size: 1.4em;
+            margin-top: 0;
+            text-align: center;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        #diagnosis-app > p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.9em;
+        }
+
+        /* === プログレスバー（質問時） === */
+        #progress-bar-container {
+            width: 100%;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            height: 8px;
+            overflow: hidden;
+            transition: opacity 0.5s, height 0.5s;
+        }
+        #progress-bar {
+            width: 0%;
+            height: 8px;
+            background-color: #FF69B4;
+            border-radius: 5px;
+            transition: width 0.4s ease-in-out;
+        }
+
+        /* === 質問エリア === */
+        #question-wrapper {
+            position: relative;
+            min-height: 380px;
+            margin-bottom: 0;
+            transition: opacity 0.5s, height 0.5s;
+        }
+        .question-block {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+        }
+        .question-block.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .question-block h3 {
+            font-size: 1.15em;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .question-block label {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.2s;
+        }
+        .question-block label:hover {
+            background-color: #fcefff;
+            border-color: #FF69B4;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .question-block input[type=“radio”] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: #FF69B4;
+            flex-shrink: 0;
+        }
+        .question-block input[type=“radio”]:checked + span {
+            font-weight: bold;
+            color: #FF69B4;
+        }
+        .question-block label span {
+            flex-grow: 1;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        /* === 次へ/診断ボタン === */
+        #next-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #FF69B4;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 40px; 
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s, opacity 0.5s, height 0.5s;
+        }
+        #next-button:hover {
+            background-color: #e04a9d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255,105,180,0.3);
+        }
+        #next-button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        /* === ローディング === */
+        #loading {
+            text-align: center;
+            padding: 40px 0;
+            display: none;
+            min-height: 180px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FF69B4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #loading-text {
+            font-size: 1.15em;
+            color: #555;
+            font-weight: bold;
+            height: 30px; 
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        /* === 擬似的なローディングバー（二重線） === */
+        #loading-bar-animation {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin: 0 auto;
+            width: 80%;
+            overflow: hidden;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #loading-bar-animation::before {
+            content: ‘’;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #FF69B4, transparent);
+            animation: loadingBar 2s infinite linear;
+        }
+        @keyframes loadingBar {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* === 診断中のプログレスバー === */
+        #diagnosis-progress-bar-container {
+            width: 80%;
+            background-color: #eee;
+            border-radius: 5px;
+            margin: 20px auto 0;
+            height: 8px;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #diagnosis-progress-bar {
+            width: 0%;
+            height: 8px;
+            background-color: #FF69B4;
+            border-radius: 5px;
+            transition: width 1s linear;
+        }
+
+        /* === 結果表示エリア === */
+        #result {
+            margin-top: 25px;
+            padding: 20px 15px;
+            border-radius: 12px;
+            background-color: #fff0f5; /* 薄いピンク背景 */
+            border: 1px solid #ffe4e1;
+            display: none;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #result h2 {
+            color: #FF69B4;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #result-type {
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 18px;
+            color: #e04a9d;
+        }
+        .result-description {
+            line-height: 1.7;
+            text-align: center;
+            color: #555;
+            font-size: 0.95em;
+            margin-bottom: 30px;
+        }
+
+        /* === ★16タイプ誘導エリア（新設） === */
+        .promotion-box {
+            background-color: #ffffff;
+            border: 2px dashed #FF69B4;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .promotion-box h4 {
+            color: #e04a9d;
+            font-size: 1.1em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .promotion-box p {
+            font-size: 0.9em;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .promotion-box strong {
+            background: linear-gradient(transparent 70%, #ffccea 70%);
+            font-weight: bold;
+        }
+
+        /* === 店舗リンクボタン === */
+        .next-step-button {
+            display: block;
+            width: 100%;
+            margin: 10px auto 0;
+            padding: 14px 0;
+            font-size: 1.05em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #28a745; /* 緑色 */
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+        .next-step-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(40,167,69,0.3);
+        }
+        .next-step-button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .button-note {
+            display: block;
+            text-align: center;
+            font-size: 0.75em;
+            color: #888;
+            margin-top: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id=“diagnosis-app”>
+        
+        <h2 class=“logo-title”>colomir</h2> 
+        <h2 class=“main-title”>簡易パーソナルカラー診断</h2>
+        <p>あなたの魅力を引き出す色を見つけましょう。</p>
+
+        <div id=“progress-bar-container”>
+            <div id=“progress-bar”></div>
+        </div>
+
+        <div id=“question-wrapper”>
+            <div class=“question-block active” data-question=“1">
+                <h3>Q1. あなたの肌（頬）の色は？</h3>
+                <label><input type=“radio” name=“q1" value=“spring”> <span>黄み（アイボリー系）で明るく、ツヤがある</span></label>
+                <label><input type=“radio” name=“q1” value=“summer”> <span>ピンク（ローズ系）で明るく、マットぎみ</span></label>
+                <label><input type=“radio” name=“q1" value=“autumn”> <span>黄み（ベージュ・オークル系）で標準～暗め</span></label>
+                <label><input type=“radio” name=“q1” value=“winter”> <span>ピンク（赤みが出やすい）または色白でコントラストがある</span></label>
+            </div>
+            
+            <div class=“question-block” data-question=“2">
+                <h3>Q2. あなたの瞳の色は？</h3>
+                <label><input type=“radio” name=“q2" value=“spring”> <span>明るいブラウン（キラキラしている）</span></label>
+                <label><input type=“radio” name=“q2” value=“summer”> <span>ソフトなブラックまたは赤みがかったブラウン</span></label>
+                <label><input type=“radio” name=“q2" value=“autumn”> <span>ダークブラウンまたは緑がかったブラウン</span></label>
+                <label><input type=“radio” name=“q2” value=“winter”> <span>濃いブラックまたは白目とのコントラストが強い</span></label>
+            </div>
+
+            <div class=“question-block” data-question=“3">
+                <h3>Q3. 似合うと褒められるアクセサリーは？</h3>
+                <label><input type=“radio” name=“q3" value=“spring”> <span>キラキラした明るいゴールド</span></label>
+                <label><input type=“radio” name=“q3” value=“summer”> <span>マットなシルバー、パール</span></label>
+                <label><input type=“radio” name=“q3" value=“autumn”> <span>マットなゴールド、ブロンズ</span></label>
+                <label><input type=“radio” name=“q3” value=“winter”> <span>キラキラしたシルバー、プラチナ</span></label>
+            </div>
+
+            <div class=“question-block” data-question=“4">
+                <h3>Q4. あなたの地毛の色や質感は？</h3>
+                <label><input type=“radio” name=“q4" value=“spring”> <span>明るいブラウンで、細くて柔らかい</span></label>
+                <label><input type=“radio” name=“q4” value=“summer”> <span>ソフトな黒色（墨色）で、細くて柔らかい</span></label>
+                <label><input type=“radio” name=“q4" value=“autumn”> <span>ダークブラウンで、量が多くハリがある</span></label>
+                <label><input type=“radio” name=“q4” value=“winter”> <span>ツヤのある真っ黒で、太くてコシがある</span></label>
+            </div>
+
+            <div class=“question-block” data-question=“5">
+                <h3>Q5. 日焼けをするとどうなりますか？</h3>
+                <label><input type=“radio” name=“q5" value=“spring”> <span>すぐに赤くなり、明るい茶色に定着する</span></label>
+                <label><input type=“radio” name=“q5” value=“summer”> <span>赤くなるだけで、黒くなりにくい（すぐ戻る）</span></label>
+                <label><input type=“radio” name=“q5" value=“autumn”> <span>赤くならずに、すぐに黒くなる</span></label>
+                <label><input type=“radio” name=“q5” value=“winter”> <span>赤くなるが、人よりやや黒くなる（または真っ白のまま）</span></label>
+            </div>
+
+            <div class=“question-block” data-question=“6">
+                <h3>Q6. すっぴんの時の唇の色は？</h3>
+                <label><input type=“radio” name=“q6" value=“spring”> <span>血色が良く、サーモンピンクや薄い朱色</span></label>
+                <label><input type=“radio” name=“q6” value=“summer”> <span>やや青みがかっていて、ローズピンクや薄紫</span></label>
+                <label><input type=“radio” name=“q6" value=“autumn”> <span>赤みが少なく、ベージュやオレンジ系</span></label>
+                <label><input type=“radio” name=“q6” value=“winter”> <span>血色が良く、はっきりとした赤色（または蒼白）</span></label>
+            </div>
+
+            <div class=“question-block” data-question=“7">
+                <h3>Q7. しっくりくるベーシックカラー（定番色）は？</h3>
+                <label><input type=“radio” name=“q7" value=“spring”> <span>明るいベージュ、キャメル</span></label>
+                <label><input type=“radio” name=“q7” value=“summer”> <span>ライトグレー、ネイビー（紺）</span></label>
+                <label><input type=“radio” name=“q7" value=“autumn”> <span>ダークブラウン、カーキ</span></label>
+                <label><input type=“radio” name=“q7” value=“winter”> <span>ブラック（黒）、ピュアホワイト（白）</span></label>
+            </div>
+
+        </div>
+
+        <button id=“next-button”>次へ</button>
+
+        <div id=“loading”>
+            <div class=“spinner”></div>
+            <p id=“loading-text”>分析準備中...</p>
+            <div id=“loading-bar-animation”></div>
+            <div id=“diagnosis-progress-bar-container”>
+                <div id=“diagnosis-progress-bar”></div>
+            </div>
+        </div>
+
+        <div id=“result”>
+            <h2>診断結果</h2>
+            <p style=“margin-bottom: 5px;“>あなたのタイプは...</p>
+            <h3 id=“result-type”></h3>
+            <p id=“result-description” class=“result-description”></p>
+            
+            <div class=“promotion-box”>
+                <h4>:warning: 4つの分類だけではありません</h4>
+                <p>
+                    この診断結果は4分類（4シーズン）による簡易的なものです。<br>
+                    実はパーソナルカラーには、さらに細分化した<strong>「16タイプ」</strong>が存在することをご存知ですか？
+                </p>
+                <p>
+                    「イエベ春だけど、鮮やかな色が似合わない...」<br>
+                    「ブルベ夏だけど、パステルカラーは苦手...」
+                </p>
+                <p>
+                    そう感じる方は、16タイプ診断で<strong>「あなただけのベストカラー」</strong>を見つけることをおすすめします。
+                </p>
+                
+                <a href=“https://beautystyle.co.jp/link/” id=“salon-link” class=“next-step-button” target=“_blank” rel=“noopener”>
+                    お近くの店舗で詳細診断を受ける
+                </a>
+                <span class=“button-note”>※Beauty Style 店舗一覧ページへ移動します</span>
+            </div>
+            </div>
+    </div>
+
+    <script>
+        // === JavaScript ===
+        let currentQuestion = 1;
+        const totalQuestions = 7;
+        const progressBar = document.getElementById(‘progress-bar’);
+        const nextButton = document.getElementById(‘next-button’);
+        const loadingElement = document.getElementById(‘loading’);
+        const resultElement = document.getElementById(‘result’);
+        const questionWrapper = document.getElementById(‘question-wrapper’);
+        const progressBarContainer = document.getElementById(‘progress-bar-container’);
+        const loadingText = document.getElementById(‘loading-text’);
+
+        const loadingBarAnimation = document.getElementById(‘loading-bar-animation’);
+        const diagnosisProgressBarContainer = document.getElementById(‘diagnosis-progress-bar-container’);
+        const diagnosisProgressBar = document.getElementById(‘diagnosis-progress-bar’);
+
+        updateProgressBar();
+
+        nextButton.addEventListener(‘click’, function() {
+            const currentAnswer = document.querySelector(`input[name=“q${currentQuestion}“]:checked`);
+            if (!currentAnswer) {
+                alert(‘回答を選択してください。‘);
+                return;
+            }
+            if (currentQuestion < totalQuestions) {
+                showQuestion(currentQuestion + 1);
+                currentQuestion++;
+                updateProgressBar();
+                if (currentQuestion === totalQuestions) {
+                    nextButton.textContent = ‘診断する‘;
+                }
+            } else {
+                startDiagnosis();
+            }
+        });
+
+        function showQuestion(questionNumber) {
+            document.querySelector(‘.question-block.active’).classList.remove(‘active’);
+            document.querySelector(`.question-block[data-question=“${questionNumber}“]`).classList.add(‘active’);
+        }
+
+        function updateProgressBar() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            progressBar.style.width = progress + ‘%’;
+        }
+
+        function startDiagnosis() {
+            questionWrapper.style.opacity = ‘0’;
+            questionWrapper.style.height = ‘0’;
+            nextButton.style.opacity = ‘0’;
+            nextButton.style.height = ‘0’;
+            nextButton.style.margin = ‘0’;
+            progressBarContainer.style.opacity = ‘0’;
+            
+            setTimeout(() => {
+                questionWrapper.style.display = ‘none’;
+                nextButton.style.display = ‘none’;
+                progressBarContainer.style.display = ‘none’;
+
+                loadingElement.style.display = ‘block’;
+                setTimeout(() => { loadingElement.style.opacity = ‘1’; }, 50);
+
+                loadingText.style.opacity = ‘1’;
+                loadingBarAnimation.style.opacity = ‘1’;
+                diagnosisProgressBarContainer.style.opacity = ‘1’;
+
+                const diagnosisSteps = [
+                    { text: ‘肌の色を解析中...‘, duration: 1000 },
+                    { text: ‘質感や透明感を測定中...‘, duration: 1000 },
+                    { text: ‘瞳の色素・輝度を詳細分析中...‘, duration: 1000 },
+                    { text: ‘地毛の質感を照合中...‘, duration: 1000 },
+                    { text: ‘似合うアクセサリー系統を判別中...‘, duration: 1000 },
+                    { text: ‘総合的なタイプを診断中...‘, duration: 1000 },
+                    { text: ‘結果を最適化中...’, duration: 800 }
+                ];
+
+                let currentStep = 0;
+                let totalDiagnosisTime = 0;
+                diagnosisSteps.forEach(step => totalDiagnosisTime += step.duration);
+
+                let diagnosisProgress = 0;
+                let elapsedTime = 0;
+
+                const updateDiagnosisTextAndProgress = () => {
+                    if (currentStep < diagnosisSteps.length) {
+                        const step = diagnosisSteps[currentStep];
+                        loadingText.style.opacity = ‘0’; 
+                        setTimeout(() => {
+                            loadingText.textContent = step.text;
+                            loadingText.style.opacity = ‘1’; 
+                        }, 300);
+
+                        elapsedTime += step.duration;
+                        diagnosisProgress = (elapsedTime / totalDiagnosisTime) * 100;
+                        diagnosisProgressBar.style.width = diagnosisProgress + ‘%’;
+
+                        currentStep++;
+                        setTimeout(updateDiagnosisTextAndProgress, step.duration);
+                    } else {
+                        setTimeout(calculateResult, 500);
+                    }
+                };
+
+                updateDiagnosisTextAndProgress();
+
+            }, 500);
+        }
+
+        function calculateResult() {
+            let scores = { spring: 0, summer: 0, autumn: 0, winter: 0 };
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const answer = document.querySelector(`input[name=“q${i}“]:checked`);
+                if (answer) {
+                    scores[answer.value]++;
+                }
+            }
+
+            let resultType = ‘’;
+            let maxScore = 0;
+            for (const type in scores) {
+                if (scores[type] > maxScore) {
+                    maxScore = scores[type];
+                    resultType = type;
+                }
+            }
+            if (!resultType) resultType = ‘spring’;
+
+            loadingElement.style.opacity = ‘0’; 
+            setTimeout(() => {
+                loadingElement.style.display = ‘none’;
+                showResult(resultType);
+            }, 500);
+        }
+
+        function showResult(type) {
+            const resultTypeElement = document.getElementById(‘result-type’);
+            const resultDescriptionElement = document.getElementById(‘result-description’);
+            let typeName = ‘’;
+            let description = ‘’;
+            switch (type) {
+                case ‘spring’:
+                    typeName = ‘イエベ春 (スプリング)‘;
+                    description = ‘明るくクリアな色が似合います。コーラルピンク、アイボリー、明るいベージュなどで、キュートで若々しい印象を引き立てましょう。’;
+                    break;
+                case ‘summer’:
+                    typeName = ‘ブルベ夏 (サマー)‘;
+                    description = ‘ソフトで涼しげな色が似合います。ラベンダー、パステルブルー、ライトグレーなどで、上品でエレガントな印象を引き立てましょう。’;
+                    break;
+                case ‘autumn’:
+                    typeName = ‘イエベ秋 (オータム)‘;
+                    description = ‘深く温かみのある色が似合います。テラコッタ、カーキ、ダークブラウンなどで、シックでゴージャスな大人っぽい印象を引き立てましょう。’;
+                    break;
+                case ‘winter’:
+                    typeName = ‘ブルベ冬 (ウィンター)‘;
+                    description = ‘鮮やかでシャープな色が似合います。ロイヤルブルー、ブラック、ピュアホワイトなどで、クールで華やか、都会的な印象を引き立てましょう。’;
+                    break;
+            }
+            resultTypeElement.textContent = typeName;
+            resultDescriptionElement.textContent = description;
+            resultElement.style.display = ‘block’;
+        }
+    </script>
+
+</body>
+</html>
