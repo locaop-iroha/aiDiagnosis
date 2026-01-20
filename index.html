@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang=“ja”>
+<html lang="ja">
 <head>
-    <meta charset=“UTF-8">
-    <meta name=“viewport” content=“width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>colomir 簡易パーソナルカラー診断</title>
     
     <style>
         /* === 基本リセットとフォント設定 === */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, “Helvetica Neue”, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f7f7f7;
@@ -117,13 +117,13 @@
             border-color: #FF69B4;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-        .question-block input[type=“radio”] {
+        .question-block input[type="radio"] {
             margin-right: 12px;
             transform: scale(1.2);
             accent-color: #FF69B4;
             flex-shrink: 0;
         }
-        .question-block input[type=“radio”]:checked + span {
+        .question-block input[type="radio"]:checked + span {
             font-weight: bold;
             color: #FF69B4;
         }
@@ -334,94 +334,94 @@
 </head>
 <body>
 
-    <div id=“diagnosis-app”>
+    <div id="diagnosis-app">
         
-        <h2 class=“logo-title”>colomir</h2> 
-        <h2 class=“main-title”>簡易パーソナルカラー診断</h2>
+        <h2 class="logo-title">colomir</h2> 
+        <h2 class="main-title">簡易パーソナルカラー診断</h2>
         <p>あなたの魅力を引き出す色を見つけましょう。</p>
 
-        <div id=“progress-bar-container”>
-            <div id=“progress-bar”></div>
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
         </div>
 
-        <div id=“question-wrapper”>
-            <div class=“question-block active” data-question=“1">
+        <div id="question-wrapper">
+            <div class="question-block active" data-question="1">
                 <h3>Q1. あなたの肌（頬）の色は？</h3>
-                <label><input type=“radio” name=“q1" value=“spring”> <span>黄み（アイボリー系）で明るく、ツヤがある</span></label>
-                <label><input type=“radio” name=“q1” value=“summer”> <span>ピンク（ローズ系）で明るく、マットぎみ</span></label>
-                <label><input type=“radio” name=“q1" value=“autumn”> <span>黄み（ベージュ・オークル系）で標準～暗め</span></label>
-                <label><input type=“radio” name=“q1” value=“winter”> <span>ピンク（赤みが出やすい）または色白でコントラストがある</span></label>
+                <label><input type="radio" name="q1" value="spring"> <span>黄み（アイボリー系）で明るく、ツヤがある</span></label>
+                <label><input type="radio" name="q1" value="summer"> <span>ピンク（ローズ系）で明るく、マットぎみ</span></label>
+                <label><input type="radio" name="q1" value="autumn"> <span>黄み（ベージュ・オークル系）で標準～暗め</span></label>
+                <label><input type="radio" name="q1" value="winter"> <span>ピンク（赤みが出やすい）または色白でコントラストがある</span></label>
             </div>
             
-            <div class=“question-block” data-question=“2">
+            <div class="question-block" data-question="2">
                 <h3>Q2. あなたの瞳の色は？</h3>
-                <label><input type=“radio” name=“q2" value=“spring”> <span>明るいブラウン（キラキラしている）</span></label>
-                <label><input type=“radio” name=“q2” value=“summer”> <span>ソフトなブラックまたは赤みがかったブラウン</span></label>
-                <label><input type=“radio” name=“q2" value=“autumn”> <span>ダークブラウンまたは緑がかったブラウン</span></label>
-                <label><input type=“radio” name=“q2” value=“winter”> <span>濃いブラックまたは白目とのコントラストが強い</span></label>
+                <label><input type="radio" name="q2" value="spring"> <span>明るいブラウン（キラキラしている）</span></label>
+                <label><input type="radio" name="q2" value="summer"> <span>ソフトなブラックまたは赤みがかったブラウン</span></label>
+                <label><input type="radio" name="q2" value="autumn"> <span>ダークブラウンまたは緑がかったブラウン</span></label>
+                <label><input type="radio" name="q2" value="winter"> <span>濃いブラックまたは白目とのコントラストが強い</span></label>
             </div>
 
-            <div class=“question-block” data-question=“3">
+            <div class="question-block" data-question="3">
                 <h3>Q3. 似合うと褒められるアクセサリーは？</h3>
-                <label><input type=“radio” name=“q3" value=“spring”> <span>キラキラした明るいゴールド</span></label>
-                <label><input type=“radio” name=“q3” value=“summer”> <span>マットなシルバー、パール</span></label>
-                <label><input type=“radio” name=“q3" value=“autumn”> <span>マットなゴールド、ブロンズ</span></label>
-                <label><input type=“radio” name=“q3” value=“winter”> <span>キラキラしたシルバー、プラチナ</span></label>
+                <label><input type="radio" name="q3" value="spring"> <span>キラキラした明るいゴールド</span></label>
+                <label><input type="radio" name="q3" value="summer"> <span>マットなシルバー、パール</span></label>
+                <label><input type="radio" name="q3" value="autumn"> <span>マットなゴールド、ブロンズ</span></label>
+                <label><input type="radio" name="q3" value="winter"> <span>キラキラしたシルバー、プラチナ</span></label>
             </div>
 
-            <div class=“question-block” data-question=“4">
+            <div class="question-block" data-question="4">
                 <h3>Q4. あなたの地毛の色や質感は？</h3>
-                <label><input type=“radio” name=“q4" value=“spring”> <span>明るいブラウンで、細くて柔らかい</span></label>
-                <label><input type=“radio” name=“q4” value=“summer”> <span>ソフトな黒色（墨色）で、細くて柔らかい</span></label>
-                <label><input type=“radio” name=“q4" value=“autumn”> <span>ダークブラウンで、量が多くハリがある</span></label>
-                <label><input type=“radio” name=“q4” value=“winter”> <span>ツヤのある真っ黒で、太くてコシがある</span></label>
+                <label><input type="radio" name="q4" value="spring"> <span>明るいブラウンで、細くて柔らかい</span></label>
+                <label><input type="radio" name="q4" value="summer"> <span>ソフトな黒色（墨色）で、細くて柔らかい</span></label>
+                <label><input type="radio" name="q4" value="autumn"> <span>ダークブラウンで、量が多くハリがある</span></label>
+                <label><input type="radio" name="q4" value="winter"> <span>ツヤのある真っ黒で、太くてコシがある</span></label>
             </div>
 
-            <div class=“question-block” data-question=“5">
+            <div class="question-block" data-question="5">
                 <h3>Q5. 日焼けをするとどうなりますか？</h3>
-                <label><input type=“radio” name=“q5" value=“spring”> <span>すぐに赤くなり、明るい茶色に定着する</span></label>
-                <label><input type=“radio” name=“q5” value=“summer”> <span>赤くなるだけで、黒くなりにくい（すぐ戻る）</span></label>
-                <label><input type=“radio” name=“q5" value=“autumn”> <span>赤くならずに、すぐに黒くなる</span></label>
-                <label><input type=“radio” name=“q5” value=“winter”> <span>赤くなるが、人よりやや黒くなる（または真っ白のまま）</span></label>
+                <label><input type="radio" name="q5" value="spring"> <span>すぐに赤くなり、明るい茶色に定着する</span></label>
+                <label><input type="radio" name="q5" value="summer"> <span>赤くなるだけで、黒くなりにくい（すぐ戻る）</span></label>
+                <label><input type="radio" name="q5" value="autumn"> <span>赤くならずに、すぐに黒くなる</span></label>
+                <label><input type="radio" name="q5" value="winter"> <span>赤くなるが、人よりやや黒くなる（または真っ白のまま）</span></label>
             </div>
 
-            <div class=“question-block” data-question=“6">
+            <div class="question-block" data-question="6">
                 <h3>Q6. すっぴんの時の唇の色は？</h3>
-                <label><input type=“radio” name=“q6" value=“spring”> <span>血色が良く、サーモンピンクや薄い朱色</span></label>
-                <label><input type=“radio” name=“q6” value=“summer”> <span>やや青みがかっていて、ローズピンクや薄紫</span></label>
-                <label><input type=“radio” name=“q6" value=“autumn”> <span>赤みが少なく、ベージュやオレンジ系</span></label>
-                <label><input type=“radio” name=“q6” value=“winter”> <span>血色が良く、はっきりとした赤色（または蒼白）</span></label>
+                <label><input type="radio" name="q6" value="spring"> <span>血色が良く、サーモンピンクや薄い朱色</span></label>
+                <label><input type="radio" name="q6" value="summer"> <span>やや青みがかっていて、ローズピンクや薄紫</span></label>
+                <label><input type="radio" name="q6" value="autumn"> <span>赤みが少なく、ベージュやオレンジ系</span></label>
+                <label><input type="radio" name="q6" value="winter"> <span>血色が良く、はっきりとした赤色（または蒼白）</span></label>
             </div>
 
-            <div class=“question-block” data-question=“7">
+            <div class="question-block" data-question="7">
                 <h3>Q7. しっくりくるベーシックカラー（定番色）は？</h3>
-                <label><input type=“radio” name=“q7" value=“spring”> <span>明るいベージュ、キャメル</span></label>
-                <label><input type=“radio” name=“q7” value=“summer”> <span>ライトグレー、ネイビー（紺）</span></label>
-                <label><input type=“radio” name=“q7" value=“autumn”> <span>ダークブラウン、カーキ</span></label>
-                <label><input type=“radio” name=“q7” value=“winter”> <span>ブラック（黒）、ピュアホワイト（白）</span></label>
+                <label><input type="radio" name="q7" value="spring"> <span>明るいベージュ、キャメル</span></label>
+                <label><input type="radio" name="q7" value="summer"> <span>ライトグレー、ネイビー（紺）</span></label>
+                <label><input type="radio" name="q7" value="autumn"> <span>ダークブラウン、カーキ</span></label>
+                <label><input type="radio" name="q7" value="winter"> <span>ブラック（黒）、ピュアホワイト（白）</span></label>
             </div>
 
         </div>
 
-        <button id=“next-button”>次へ</button>
+        <button id="next-button">次へ</button>
 
-        <div id=“loading”>
-            <div class=“spinner”></div>
-            <p id=“loading-text”>分析準備中...</p>
-            <div id=“loading-bar-animation”></div>
-            <div id=“diagnosis-progress-bar-container”>
-                <div id=“diagnosis-progress-bar”></div>
+        <div id="loading">
+            <div class="spinner"></div>
+            <p id="loading-text">分析準備中...</p>
+            <div id="loading-bar-animation"></div>
+            <div id="diagnosis-progress-bar-container">
+                <div id="diagnosis-progress-bar"></div>
             </div>
         </div>
 
-        <div id=“result”>
+        <div id="result">
             <h2>診断結果</h2>
-            <p style=“margin-bottom: 5px;“>あなたのタイプは...</p>
-            <h3 id=“result-type”></h3>
-            <p id=“result-description” class=“result-description”></p>
+            <p style="margin-bottom: 5px;">あなたのタイプは...</p>
+            <h3 id="result-type"></h3>
+            <p id="result-description" class="result-description"></p>
             
-            <div class=“promotion-box”>
-                <h4>:warning: 4つの分類だけではありません</h4>
+            <div class="promotion-box">
+                <h4>⚠️ 4つの分類だけではありません</h4>
                 <p>
                     この診断結果は4分類（4シーズン）による簡易的なものです。<br>
                     実はパーソナルカラーには、さらに細分化した<strong>「16タイプ」</strong>が存在することをご存知ですか？
@@ -434,10 +434,10 @@
                     そう感じる方は、16タイプ診断で<strong>「あなただけのベストカラー」</strong>を見つけることをおすすめします。
                 </p>
                 
-                <a href=“https://beautystyle.co.jp/link/” id=“salon-link” class=“next-step-button” target=“_blank” rel=“noopener”>
+                <a href="https://beautystyle.co.jp/link/" id="salon-link" class="next-step-button" target="_blank" rel="noopener">
                     お近くの店舗で詳細診断を受ける
                 </a>
-                <span class=“button-note”>※Beauty Style 店舗一覧ページへ移動します</span>
+                <span class="button-note">※Beauty Style 店舗一覧ページへ移動します</span>
             </div>
             </div>
     </div>
@@ -446,24 +446,24 @@
         // === JavaScript ===
         let currentQuestion = 1;
         const totalQuestions = 7;
-        const progressBar = document.getElementById(‘progress-bar’);
-        const nextButton = document.getElementById(‘next-button’);
-        const loadingElement = document.getElementById(‘loading’);
-        const resultElement = document.getElementById(‘result’);
-        const questionWrapper = document.getElementById(‘question-wrapper’);
-        const progressBarContainer = document.getElementById(‘progress-bar-container’);
-        const loadingText = document.getElementById(‘loading-text’);
+        const progressBar = document.getElementById('progress-bar');
+        const nextButton = document.getElementById('next-button');
+        const loadingElement = document.getElementById('loading');
+        const resultElement = document.getElementById('result');
+        const questionWrapper = document.getElementById('question-wrapper');
+        const progressBarContainer = document.getElementById('progress-bar-container');
+        const loadingText = document.getElementById('loading-text');
 
-        const loadingBarAnimation = document.getElementById(‘loading-bar-animation’);
-        const diagnosisProgressBarContainer = document.getElementById(‘diagnosis-progress-bar-container’);
-        const diagnosisProgressBar = document.getElementById(‘diagnosis-progress-bar’);
+        const loadingBarAnimation = document.getElementById('loading-bar-animation');
+        const diagnosisProgressBarContainer = document.getElementById('diagnosis-progress-bar-container');
+        const diagnosisProgressBar = document.getElementById('diagnosis-progress-bar');
 
         updateProgressBar();
 
-        nextButton.addEventListener(‘click’, function() {
-            const currentAnswer = document.querySelector(`input[name=“q${currentQuestion}“]:checked`);
+        nextButton.addEventListener('click', function() {
+            const currentAnswer = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
             if (!currentAnswer) {
-                alert(‘回答を選択してください。‘);
+                alert('回答を選択してください。');
                 return;
             }
             if (currentQuestion < totalQuestions) {
@@ -471,7 +471,7 @@
                 currentQuestion++;
                 updateProgressBar();
                 if (currentQuestion === totalQuestions) {
-                    nextButton.textContent = ‘診断する‘;
+                    nextButton.textContent = '診断する';
                 }
             } else {
                 startDiagnosis();
@@ -479,43 +479,43 @@
         });
 
         function showQuestion(questionNumber) {
-            document.querySelector(‘.question-block.active’).classList.remove(‘active’);
-            document.querySelector(`.question-block[data-question=“${questionNumber}“]`).classList.add(‘active’);
+            document.querySelector('.question-block.active').classList.remove('active');
+            document.querySelector(`.question-block[data-question="${questionNumber}"]`).classList.add('active');
         }
 
         function updateProgressBar() {
             const progress = (currentQuestion / totalQuestions) * 100;
-            progressBar.style.width = progress + ‘%’;
+            progressBar.style.width = progress + '%';
         }
 
         function startDiagnosis() {
-            questionWrapper.style.opacity = ‘0’;
-            questionWrapper.style.height = ‘0’;
-            nextButton.style.opacity = ‘0’;
-            nextButton.style.height = ‘0’;
-            nextButton.style.margin = ‘0’;
-            progressBarContainer.style.opacity = ‘0’;
-            
+            questionWrapper.style.opacity = '0';
+            questionWrapper.style.height = '0';
+            nextButton.style.opacity = '0';
+            nextButton.style.height = '0';
+            nextButton.style.margin = '0';
+            progressBarContainer.style.opacity = '0';
+
             setTimeout(() => {
-                questionWrapper.style.display = ‘none’;
-                nextButton.style.display = ‘none’;
-                progressBarContainer.style.display = ‘none’;
+                questionWrapper.style.display = 'none';
+                nextButton.style.display = 'none';
+                progressBarContainer.style.display = 'none';
 
-                loadingElement.style.display = ‘block’;
-                setTimeout(() => { loadingElement.style.opacity = ‘1’; }, 50);
+                loadingElement.style.display = 'block';
+                setTimeout(() => { loadingElement.style.opacity = '1'; }, 50);
 
-                loadingText.style.opacity = ‘1’;
-                loadingBarAnimation.style.opacity = ‘1’;
-                diagnosisProgressBarContainer.style.opacity = ‘1’;
+                loadingText.style.opacity = '1';
+                loadingBarAnimation.style.opacity = '1';
+                diagnosisProgressBarContainer.style.opacity = '1';
 
                 const diagnosisSteps = [
-                    { text: ‘肌の色を解析中...‘, duration: 1000 },
-                    { text: ‘質感や透明感を測定中...‘, duration: 1000 },
-                    { text: ‘瞳の色素・輝度を詳細分析中...‘, duration: 1000 },
-                    { text: ‘地毛の質感を照合中...‘, duration: 1000 },
-                    { text: ‘似合うアクセサリー系統を判別中...‘, duration: 1000 },
-                    { text: ‘総合的なタイプを診断中...‘, duration: 1000 },
-                    { text: ‘結果を最適化中...’, duration: 800 }
+                    { text: '肌の色を解析中...', duration: 1000 },
+                    { text: '質感や透明感を測定中...', duration: 1000 },
+                    { text: '瞳の色素・輝度を詳細分析中...', duration: 1000 },
+                    { text: '地毛の質感を照合中...', duration: 1000 },
+                    { text: '似合うアクセサリー系統を判別中...', duration: 1000 },
+                    { text: '総合的なタイプを診断中...', duration: 1000 },
+                    { text: '結果を最適化中...', duration: 800 }
                 ];
 
                 let currentStep = 0;
@@ -528,15 +528,15 @@
                 const updateDiagnosisTextAndProgress = () => {
                     if (currentStep < diagnosisSteps.length) {
                         const step = diagnosisSteps[currentStep];
-                        loadingText.style.opacity = ‘0’; 
+                        loadingText.style.opacity = '0';
                         setTimeout(() => {
                             loadingText.textContent = step.text;
-                            loadingText.style.opacity = ‘1’; 
+                            loadingText.style.opacity = '1';
                         }, 300);
 
                         elapsedTime += step.duration;
                         diagnosisProgress = (elapsedTime / totalDiagnosisTime) * 100;
-                        diagnosisProgressBar.style.width = diagnosisProgress + ‘%’;
+                        diagnosisProgressBar.style.width = diagnosisProgress + '%';
 
                         currentStep++;
                         setTimeout(updateDiagnosisTextAndProgress, step.duration);
@@ -552,15 +552,15 @@
 
         function calculateResult() {
             let scores = { spring: 0, summer: 0, autumn: 0, winter: 0 };
-            
+
             for (let i = 1; i <= totalQuestions; i++) {
-                const answer = document.querySelector(`input[name=“q${i}“]:checked`);
+                const answer = document.querySelector(`input[name="q${i}"]:checked`);
                 if (answer) {
                     scores[answer.value]++;
                 }
             }
 
-            let resultType = ‘’;
+            let resultType = '';
             let maxScore = 0;
             for (const type in scores) {
                 if (scores[type] > maxScore) {
@@ -568,41 +568,41 @@
                     resultType = type;
                 }
             }
-            if (!resultType) resultType = ‘spring’;
+            if (!resultType) resultType = 'spring';
 
-            loadingElement.style.opacity = ‘0’; 
+            loadingElement.style.opacity = '0';
             setTimeout(() => {
-                loadingElement.style.display = ‘none’;
+                loadingElement.style.display = 'none';
                 showResult(resultType);
             }, 500);
         }
 
         function showResult(type) {
-            const resultTypeElement = document.getElementById(‘result-type’);
-            const resultDescriptionElement = document.getElementById(‘result-description’);
-            let typeName = ‘’;
-            let description = ‘’;
+            const resultTypeElement = document.getElementById('result-type');
+            const resultDescriptionElement = document.getElementById('result-description');
+            let typeName = '';
+            let description = '';
             switch (type) {
-                case ‘spring’:
-                    typeName = ‘イエベ春 (スプリング)‘;
-                    description = ‘明るくクリアな色が似合います。コーラルピンク、アイボリー、明るいベージュなどで、キュートで若々しい印象を引き立てましょう。’;
+                case 'spring':
+                    typeName = 'イエベ春 (スプリング)';
+                    description = '明るくクリアな色が似合います。コーラルピンク、アイボリー、明るいベージュなどで、キュートで若々しい印象を引き立てましょう。';
                     break;
-                case ‘summer’:
-                    typeName = ‘ブルベ夏 (サマー)‘;
-                    description = ‘ソフトで涼しげな色が似合います。ラベンダー、パステルブルー、ライトグレーなどで、上品でエレガントな印象を引き立てましょう。’;
+                case 'summer':
+                    typeName = 'ブルベ夏 (サマー)';
+                    description = 'ソフトで涼しげな色が似合います。ラベンダー、パステルブルー、ライトグレーなどで、上品でエレガントな印象を引き立てましょう。';
                     break;
-                case ‘autumn’:
-                    typeName = ‘イエベ秋 (オータム)‘;
-                    description = ‘深く温かみのある色が似合います。テラコッタ、カーキ、ダークブラウンなどで、シックでゴージャスな大人っぽい印象を引き立てましょう。’;
+                case 'autumn':
+                    typeName = 'イエベ秋 (オータム)';
+                    description = '深く温かみのある色が似合います。テラコッタ、カーキ、ダークブラウンなどで、シックでゴージャスな大人っぽい印象を引き立てましょう。';
                     break;
-                case ‘winter’:
-                    typeName = ‘ブルベ冬 (ウィンター)‘;
-                    description = ‘鮮やかでシャープな色が似合います。ロイヤルブルー、ブラック、ピュアホワイトなどで、クールで華やか、都会的な印象を引き立てましょう。’;
+                case 'winter':
+                    typeName = 'ブルベ冬 (ウィンター)';
+                    description = '鮮やかでシャープな色が似合います。ロイヤルブルー、ブラック、ピュアホワイトなどで、クールで華やか、都会的な印象を引き立てましょう。';
                     break;
             }
             resultTypeElement.textContent = typeName;
             resultDescriptionElement.textContent = description;
-            resultElement.style.display = ‘block’;
+            resultElement.style.display = 'block';
         }
     </script>
 
