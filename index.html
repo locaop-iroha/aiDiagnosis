@@ -238,33 +238,93 @@
 
         /* === 結果表示エリア === */
         #result {
-            margin-top: 25px;
-            padding: 20px 15px;
-            border-radius: 12px;
-            background-color: #fff0f5; /* 薄いピンク背景 */
-            border: 1px solid #ffe4e1;
             display: none;
             animation: fadeIn 1s ease-out;
+        }
+        .result-box {
+            position: relative;
+            padding: 90px 42px;
+            margin-inline: -20px;
+            background-size: cover;
+            background-position: center;
+        }
+        .result-box.result-spring {
+            background-image: url(./img/bg01.png);
+        }
+        .result-box.result-summer {
+            background-image: url(./img/bg02.png);
+        }
+        .result-box.result-autumn {
+            background-image: url(./img/bg03.png);
+        }
+        .result-box.result-winter {
+            background-image: url(./img/bg04.png);
+        }
+        .result-box * {
+            position: relative;
+        }
+        .result-box::before {
+            content: "";
+            background-image: url(./img/bg_wht.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 100%;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         #result h2 {
-            color: #FF69B4;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 0;
+            letter-spacing: 0.4em;
+            font-weight: normal;
+            position: relative;
+            padding-block: 8px;
         }
+        #result h2::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background-color: #000;
+        }
+        #result h2::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background-color: #000;
+        }
+        #result h2 + * {
+            margin-top: 32px;
+        }
+
         #result-type {
             text-align: center;
-            font-size: 1.6em;
-            font-weight: bold;
             margin-bottom: 18px;
-            color: #e04a9d;
+        }
+        #result-type figure {
+            margin: 0;
+        }
+        #result-type img {
+            max-width: 100%;
+            height: auto;
         }
         .result-description {
             line-height: 1.7;
-            text-align: center;
             color: #555;
             font-size: 0.95em;
             margin-bottom: 30px;
@@ -273,61 +333,62 @@
         /* === ★16タイプ誘導エリア（新設） === */
         .promotion-box {
             background-color: #ffffff;
-            border: 2px dashed #FF69B4;
-            border-radius: 12px;
-            padding: 20px 15px;
-            text-align: center;
             margin-bottom: 20px;
         }
-        .promotion-box h4 {
-            color: #e04a9d;
-            font-size: 1.1em;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        .promotion-box p {
-            font-size: 0.9em;
-            color: #444;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            text-align: left;
+        .promotion-box figure {
+            width: 100%;
+            margin: 0;
         }
         .promotion-box strong {
             background: linear-gradient(transparent 70%, #ffccea 70%);
             font-weight: bold;
         }
 
+        .promotion-box-inner {
+            margin-top: 42px;
+            background-color: #f1f1ea;
+            padding: 48px 20px 20px 20px;
+            margin-inline: -20px;
+            /* 四隅の角を直線で切り取る（20px） */
+            clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+        }
+        .promotion-box-title {
+            max-width: 60%;
+            margin-inline: auto;
+            margin-top: 0;
+            margin: 0 auto 28px auto;
+        }
+
         /* === 店舗リンクボタン === */
-        .next-step-button {
-            display: block;
-            width: 100%;
-            margin: 10px auto 0;
-            padding: 14px 0;
-            font-size: 1.05em;
-            font-weight: bold;
-            color: #fff;
-            background-color: #28a745; /* 緑色 */
-            border-radius: 10px;
-            text-decoration: none;
-            text-align: center;
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
-            box-sizing: border-box;
-        }
-        .next-step-button:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(40,167,69,0.3);
-        }
-        .next-step-button:active {
-            transform: translateY(0);
-            box-shadow: none;
-        }
         .button-note {
             display: block;
             text-align: center;
             font-size: 0.75em;
             color: #888;
             margin-top: 8px;
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        p {
+            line-height: 1.75;
+        }
+
+        .next-step-button {
+            margin-top: 32px;
+            display: block;
+        }
+        .next-step-button:hover {
+            opacity: 0.7;
         }
 
     </style>
@@ -336,8 +397,7 @@
 
     <div id="diagnosis-app">
         
-        <h2 class="logo-title">colomir</h2> 
-        <h2 class="main-title">簡易パーソナルカラー診断</h2>
+        <h2 class="logo"><figure><img src="img/logo.png" alt=""></figure></h2> 
         <p>あなたの魅力を引き出す色を見つけましょう。</p>
 
         <div id="progress-bar-container">
@@ -413,31 +473,23 @@
                 <div id="diagnosis-progress-bar"></div>
             </div>
         </div>
-
         <div id="result">
-            <h2>診断結果</h2>
-            <p style="margin-bottom: 5px;">あなたのタイプは...</p>
-            <h3 id="result-type"></h3>
-            <p id="result-description" class="result-description"></p>
-            
+            <div class="result-box">
+                <h2>診断結果</h2>
+                <h3 id="result-type"><figure></figure></h3>
+                <p id="result-description" class="result-description"></p>
+            </div>
             <div class="promotion-box">
-                <h4>⚠️ 4つの分類だけではありません</h4>
-                <p>
-                    この診断結果は4分類（4シーズン）による簡易的なものです。<br>
-                    実はパーソナルカラーには、さらに細分化した<strong>「16タイプ」</strong>が存在することをご存知ですか？
-                </p>
-                <p>
-                    「イエベ春だけど、鮮やかな色が似合わない...」<br>
-                    「ブルベ夏だけど、パステルカラーは苦手...」
-                </p>
-                <p>
-                    そう感じる方は、16タイプ診断で<strong>「あなただけのベストカラー」</strong>を見つけることをおすすめします。
-                </p>
-                
+                <h4><figure><img src="img/title01.png" alt=""></figure></h4>
+                <p>この診断結果は4分類（4シーズン）による簡易的なものです。実はパーソナルカラーには、さらに細分化した「16タイプ」が存在することをご存知ですか？<br>「イエベ春だけど、鮮やかな色が似合わない...」「ブルベ夏だけど、パステルカラーは苦手...」<br>そう感じる方は、16タイプ診断で「あなただけのベストカラー」を見つけることをおすすめします。</p>
+                <div class="promotion-box-inner">
+                    <h5 class="promotion-box-title"><figure><img src="img/title02.png" alt=""></figure></h5>
+                    <figure class="promotion-box-img"><img src="img/diagnosis.png" alt=""></figure>
+                    <p>ドレープと呼ばれる布をあて、顔映りの違いを分析、似合うカラーを見極めていきます。基本的にパーソナルカラーは一生変わりません。自己診断の結果にしっくりこない方は、一度プロの診断を受けてみることをおすすめします</p>
+                </div>
                 <a href="https://beautystyle.co.jp/link/" id="salon-link" class="next-step-button" target="_blank" rel="noopener">
-                    お近くの店舗で詳細診断を受ける
+                    <img src="img/button.png" alt="">
                 </a>
-                <span class="button-note">※Beauty Style 店舗一覧ページへ移動します</span>
             </div>
             </div>
     </div>
@@ -580,30 +632,47 @@
         function showResult(type) {
             const resultTypeElement = document.getElementById('result-type');
             const resultDescriptionElement = document.getElementById('result-description');
-            let typeName = '';
-            let description = '';
-            switch (type) {
-                case 'spring':
-                    typeName = 'イエベ春 (スプリング)';
-                    description = '明るくクリアな色が似合います。コーラルピンク、アイボリー、明るいベージュなどで、キュートで若々しい印象を引き立てましょう。';
-                    break;
-                case 'summer':
-                    typeName = 'ブルベ夏 (サマー)';
-                    description = 'ソフトで涼しげな色が似合います。ラベンダー、パステルブルー、ライトグレーなどで、上品でエレガントな印象を引き立てましょう。';
-                    break;
-                case 'autumn':
-                    typeName = 'イエベ秋 (オータム)';
-                    description = '深く温かみのある色が似合います。テラコッタ、カーキ、ダークブラウンなどで、シックでゴージャスな大人っぽい印象を引き立てましょう。';
-                    break;
-                case 'winter':
-                    typeName = 'ブルベ冬 (ウィンター)';
-                    description = '鮮やかでシャープな色が似合います。ロイヤルブルー、ブラック、ピュアホワイトなどで、クールで華やか、都会的な印象を引き立てましょう。';
-                    break;
-            }
-            resultTypeElement.textContent = typeName;
-            resultDescriptionElement.textContent = description;
+            const resultBox = document.querySelector('.result-box');
+
+            // タイプごとの画像ファイル名とクラス名のマッピング
+            const typeData = {
+                spring: { image: 'result01.png', className: 'result-spring' },
+                summer: { image: 'result02.png', className: 'result-summer' },
+                autumn: { image: 'result03.png', className: 'result-autumn' },
+                winter: { image: 'result04.png', className: 'result-winter' }
+            };
+
+            const descriptions = {
+                spring: '明るくクリアな色が似合います。コーラルピンク、アイボリー、明るいベージュなどで、キュートで若々しい印象を引き立てましょう。',
+                summer: 'ソフトで涼しげな色が似合います。ラベンダー、パステルブルー、ライトグレーなどで、上品でエレガントな印象を引き立てましょう。',
+                autumn: '深く温かみのある色が似合います。テラコッタ、カーキ、ダークブラウンなどで、シックでゴージャスな大人っぽい印象を引き立てましょう。',
+                winter: '鮮やかでシャープな色が似合います。ロイヤルブルー、ブラック、ピュアホワイトなどで、クールで華やか、都会的な印象を引き立てましょう。'
+            };
+
+            // result-boxに既存のresult-*クラスを削除してから新しいクラスを追加
+            resultBox.classList.remove('result-spring', 'result-summer', 'result-autumn', 'result-winter');
+            resultBox.classList.add(typeData[type].className);
+
+            // 画像を設定
+            const figure = resultTypeElement.querySelector('figure');
+            figure.innerHTML = `<img src="img/${typeData[type].image}" alt="">`;
+
+            resultDescriptionElement.textContent = descriptions[type];
             resultElement.style.display = 'block';
         }
+
+        // 開発用：URLパラメータで結果画面を直接表示
+        // 例: ?result=spring, ?result=summer, ?result=autumn, ?result=winter
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const debugResult = params.get('result');
+            if (debugResult && ['spring', 'summer', 'autumn', 'winter'].includes(debugResult)) {
+                questionWrapper.style.display = 'none';
+                nextButton.style.display = 'none';
+                progressBarContainer.style.display = 'none';
+                showResult(debugResult);
+            }
+        })();
     </script>
 
 </body>
